@@ -1,7 +1,7 @@
 <?php
 	require_once 'Core/init.php';
 	
-	Helper::getHeader('Algebra Contacts',);
+	Helper::getHeader('Algebra Contacts');
 	DB::getInstance();
 ?>
 	<div class="row">
@@ -19,11 +19,9 @@
             </div>
         </div>
     </div>
-	
+
 <?php
-
 	Helper::getFooter();
-
 ?>
 
    

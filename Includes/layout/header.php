@@ -5,11 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <title><?php echo $title; ?></title>
+    <title><?php echo $title ?></title>
 
     <!-- Bootstrap -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="Assets/css/bootstrap.min.css" rel="stylesheet">
 
-    
- </head>
+   
+  </head>
   <body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<a class="navbar-brand center-block" style="text-align:center;float:none;" href="#">Algebra Conntacts</a>
+		</div><!-- /.container-fluid -->
+	</nav>
+	<div class="container-fluid">

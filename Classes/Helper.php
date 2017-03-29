@@ -22,7 +22,9 @@ class Helper
 	public static function getFooter($path = 'footer')
 	{
 		if($path){
-			$file = require_once 'Includes/layout/' . $
+			$file = require_once 'Includes/layout/' . $path .'.php';
+			return $file;
 		}
+		return false;
 	}
 }

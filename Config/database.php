@@ -15,7 +15,7 @@ return [
 		'collation' => 'utf8_general_ci'
 	],
 	'sqlite' => [
-		'db' => ''
+		'db' 		=> ''
 	],
 	'pgsql' => [
 		'host' 		=> '',

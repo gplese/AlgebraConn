@@ -10,6 +10,8 @@ class DB
 	private $_results;
 	private $_count = 0;
 	
+	private function __clone(){}
+	
 	public static function getInstance
 	{
 		if(!self::$_instance){
@@ -17,4 +19,82 @@ class DB
 		}
 		return self::$_instance;
 	}
-}
+	
+	private function __construct()
+	{
+		$this->_config = config::get('Config/database');
+			try {
+			$this->_connection = new PDO($this->_config['driver'].':host=.$this->_config[$this->_config['driver']]['host'].';dbname='.$this->_config[$this->_config['driver']]['db'],$this->_config[$this->_config['driver']]['user'], $this->_config[$this->_config['driver']]['pass']);
+		} catch (PDOException $e) {
+			die($e->getMessage());
+		}
+	}
+	
+	
+	public function query($sql, $params = array())
+	
+	{
+		$this->_error = false;
+		
+		if($this->_query = $this->_connection->prepare($sql)){
+			
+				
+				$x = 1;
+				if(!empty($params)) {
+					foreach($params as $param) {
+						$this->_query->binValue($x,$param)
+						$x++
+					}
+				}
+				if($this->_query->execute()) {
+				$this->_results = $this->_query->fetchAll($this->_config['fetch']);
+				$this->_count = $this->_query->rowCount();
+			} else {
+				$this->_error = true;
+			}
+			
+		}
+		return $this;
+	}
+	
+	public function get()
+	{
+		return $this->_query("SELECT * FROM users")
+	}
+	
+	public function insert() 
+	{
+		
+	}
+	
+	public function update()
+	{
+		
+	} 
+	
+	public function delete()
+	{
+		
+	}
+	
+	
+	
+	public function getConnection()
+	{
+		return $this->_connection;
+	}
+	
+	public function error()
+	{
+		return $this->_error;
+	}
+	public function results()
+	{
+		return $this->_results;
+	}
+	public function count()
+	{
+		return $this->_count;
+	}
+	
+	}

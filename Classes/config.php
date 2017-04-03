@@ -1,6 +1,6 @@
 <?php
 class config
-{
+{cd
 	
 	private function __construct(){}
 	private function __clone(){}

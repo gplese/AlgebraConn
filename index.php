@@ -2,7 +2,16 @@
 	require_once 'Core/init.php';
 	
 	Helper::getHeader('Algebra Contacts');
-	DB::getInstance();
+	DB::getInstance()->get("SELECT * FROM users");
+	echo '<pre>';
+	//var_dump($db);
+	if($db->count() > 0) {
+	foreach ($db->results() as $results){
+		echo $results->name;
+	}
+	} else {
+		echo 'Trenutno nema podataka u bazi!!!';
+	}
 ?>
 	<div class="row">
         <div class="col-md-8 col-md-offset-2">

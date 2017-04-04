@@ -42,8 +42,8 @@ class DB
 				$x = 1;
 				if(!empty($params)) {
 					foreach($params as $param) {
-						$this->_query->binValue($x,$param)
-						$x++
+						$this->_query->bindValue($x,$param);
+						$x++;
 					}
 				}
 				if($this->_query->execute()) {
@@ -57,22 +57,86 @@ class DB
 		return $this;
 	}
 	
-	public function get()
+	private function action($action, $table, $where = array())
 	{
-		return $this->_query("SELECT * FROM users")
+		if(count($where) === 3)	{
+			$operators = array('=','<','>','<=','>=');
+			
+			$field = $where[0];
+			$operator = $where[1];
+			$value = $where[2];
+			
+			if(in_array($operator,$operators)){
+				$sql = "{$action} FROM" {$table} WHERE {$field} {$operator}?";
+				if(!$this->query($sql, array($value))->error()){
+					return $this;
+				}
+			}
+		} else {
+			$sql = "{$action} FROM {$table}";
+			if(!$this->query($sql)->erroe()){
+				return $this;
+			}
+		}
 	}
 	
-	public function insert() 
+	public function get($field, $table, $where = array())
 	{
-		
+		return $this->action("SELECT{$field}", $table, $where); 
 	}
 	
-	public function update()
+	public function insert($table, $fields) 
 	{
+		$key = implode(',',array_keys($fields));
+		$fields_num = count ($fields);
+		$values = '';
+		$x = 1;
 		
-	} 
+		foreach($fields as $field){
+			$values .= '?';	
+			if($x < $fields_num){
+				$values .=',';
+			}
+			$x++;
+		}
+		//die($values);
+		$sql = "INSERT INTO {$table} ({$keys}) VALUES ({$values})";
+		if(!$this->query($sql,$fields)->error()){
+			return true;
+		}
+		
+		return false;
+		
+	}	
 	
-	public function delete()
+	public function update($table,$id,$fields)
+	{
+		$fields_num = count($fields);
+		$ser = '';
+		$x = 1;
+		
+		foreach($fields as $field){
+			$set .="{$key} = ?";
+			if($x < $field_num){
+				$set .=', ';
+			}
+			$x++;
+		}
+		$sql = "UPDATE {$table} SET {$set} WHERE id={$id}";
+		
+		if(!$this->query($sql,$fields)->error()){
+			return true;
+		}
+		return false;
+	}
+	
+	
+	public function delete($table,$where)
+	{
+		return $this->action('DELETE',$table,$where);
+	}
+	
+	public function first()
 	{
 		
 	}

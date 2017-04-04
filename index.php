@@ -2,9 +2,12 @@
 	require_once 'Core/init.php';
 	
 	Helper::getHeader('Algebra Contacts');
-	DB::getInstance()->get("SELECT * FROM users");
+	$db = DB::getInstance()->get('*', 'users');
+	//$db = DB::getInstance()
+	
 	echo '<pre>';
-	//var_dump($db);
+	var_dump($db);
+	/*
 	if($db->count() > 0) {
 	foreach ($db->results() as $results){
 		echo $results->name;
@@ -12,6 +15,11 @@
 	} else {
 		echo 'Trenutno nema podataka u bazi!!!';
 	}
+	
+	DB::getInstance()->get('*','users',array('id','=',3));
+	*/
+	 DB::getInstance()->insert('users', array('name'=>'Marko Markic','username'=>'Marko','pasword'=>''123456789,'salt'=>'65+464sdfg','role_id'=>1));
+	"INSERT INTO users (name,username,password,salt)VALUES(?,?,?,?)"
 ?>
 	<div class="row">
         <div class="col-md-8 col-md-offset-2">

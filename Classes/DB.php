@@ -24,7 +24,13 @@ class DB
 	{
 		$this->_config = config::get('Config/database');
 			try {
-			$this->_connection = new PDO($this->_config['driver'].':host=.$this->_config[$this->_config['driver']]['host'].';dbname='.$this->_config[$this->_config['driver']]['db'],$this->_config[$this->_config['driver']]['user'], $this->_config[$this->_config['driver']]['pass']);
+			$this->_connection = new PDO($this->_config[
+			'driver'].':host=.$this->_config[$this->
+			_config['driver']]['host'].';dbname='.$this->
+			_config[$this->_config['driver']]['db'].
+			'charset=UTF8',$this->_config[$this->_config[
+			'driver']]['user'], $this->_config[$this->
+			_config['driver']]['pass']);
 		} catch (PDOException $e) {
 			die($e->getMessage());
 		}
@@ -136,10 +142,7 @@ class DB
 		return $this->action('DELETE',$table,$where);
 	}
 	
-	public function first()
-	{
-		
-	}
+
 	
 	
 	
@@ -156,6 +159,12 @@ class DB
 	{
 		return $this->_results;
 	}
+	
+	public function first()
+	{
+		return $this->_results[0];
+	}
+	
 	public function count()
 	{
 		return $this->_count;
